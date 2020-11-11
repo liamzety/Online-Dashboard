@@ -2,11 +2,15 @@
   max-width: 90vw;
 }
 
+.hide {
+  display: none;
+}
+
 .flex {
   display: flex;
 }
 
-.column {
+.col {
   flex-direction: column;
 }
 

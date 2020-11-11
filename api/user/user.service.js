@@ -1,4 +1,4 @@
-const db = require('../../user_db.json');
+const db = require('../../data/user_db.json');
 
 async function query(userId) {
     try {

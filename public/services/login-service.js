@@ -1,9 +1,11 @@
 'use strict';
 export const loginService = {
     handleLogin,
+    handleLogOut,
     getUsers
 }
 const BASE_URL = "http://localhost:3030/"
+
 
 async function getUsers() {
     const res = await fetch(`${BASE_URL}api/user`)
@@ -21,10 +23,17 @@ async function handleLogin(user) {
             body: JSON.stringify(user)
         })
         if (res.status !== 200) throw new Error()
+
         return await res.json()
     } catch (error) {
         console.log('Login unsuccessful')
     }
 
 }
-
+async function handleLogOut() {
+    // clearInterval(userTimeInterval)
+    // console.log('TIME:', userTime)
+    // userTime = 0
+    sessionStorage.clear()
+    window.location.replace('/');
+}

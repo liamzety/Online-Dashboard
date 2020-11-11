@@ -1,0 +1,33 @@
+.login {
+    min-height: 80vh;
+}
+
+.login-form {
+    width: 400px;
+    padding: 40px 25px;
+    border-radius: 3px;
+    box-shadow: 0px 0px 9px 0px #bab8b8;
+
+    .field-container {
+        margin-bottom: 25px;
+
+        label {
+            margin-right: 15px;
+        }
+
+        input {}
+
+    }
+
+    button {
+        border: 0;
+        border-radius: 3px;
+        background-color: rgb(48, 230, 48);
+        padding: 15px;
+        font-size: 17px;
+        font-weight: 700;
+        align-self: flex-end;
+    }
+
+
+}

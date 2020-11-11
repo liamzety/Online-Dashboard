@@ -1,3 +1,24 @@
 .main-nav {
     background-color: $mainBlue;
+    min-height: 75px;
+    max-height: 5vh;
+
+    .nav-action {
+        h2 {
+            font-size: 15px;
+            margin-bottom: 10px;
+        }
+
+
+
+        button {
+            align-self: flex-end;
+            width: 60%;
+            color: $mainWhite;
+            padding: 2px 0;
+            border-radius: 30px;
+            background-color: transparent;
+            border: 1px solid $mainWhite;
+        }
+    }
 }
