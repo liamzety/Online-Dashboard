@@ -1,0 +1,20 @@
+[
+    {
+        "username": "user1",
+        "loginTime": "60",
+        "lastUpdatedAt": "1605066301",
+        "userIp": "192.168.36.2",
+        "password": "$2b$10$lUkWraMU3QH9bV3iqmNkbuaM9yvpuHzCLCMhZ81RYlu4TLLVHAD2S"
+    },
+    {
+        "username": "user2",
+        "loginTime": "120",
+        "lastUpdatedAt": "160506551",
+        "userIp": "192.198.46.2",
+        "password": "$2b$10$h3MOEDWC5AS7crzP5J5Cfu6ytv3aS6CtieYi8BP6aJyzbRvFbao42"
+    },
+    {
+        "username": "admin",
+        "password": "$2b$10$1TuIaubgJnHg/19LpbXwSuRhaYRexAVjK6G4AiyqbEu0zkRaUQ1hK"
+    }
+]

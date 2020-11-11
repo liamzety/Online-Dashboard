@@ -1,0 +1,60 @@
+* {
+  box-sizing: border-box;
+  font-family: font1;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+body {
+  margin: 0;
+}
+
+button,
+a {
+  cursor: pointer;
+  transition: .3s;
+
+  &:hover {
+    filter: brightness(.85);
+  }
+}
+
+input {
+  border: 1px solid #ECECEC;
+  border-radius: 10px;
+  background: linear-gradient(0deg, rgba(236, 236, 236, 1) 0%, rgba(255, 255, 255, 1) 68%);
+  width: 128px;
+  height: 44px;
+  margin-left: 15px;
+  font-size: 25px;
+  padding: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+select {
+  font-size: 18px;
+  color: #9c9c9c;
+}
+
+input,
+select {
+  transition: .3s;
+
+  &:hover {
+    filter: brightness(.97);
+  }
+}
+
+a {
+  text-decoration: none;
+  color: $mainWhite;
+}
