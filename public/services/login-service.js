@@ -1,10 +1,10 @@
 'use strict';
-
 export const loginService = {
     handleLogin,
     getUsers
 }
-const BASE_URL = "/"
+const BASE_URL = "http://localhost:3030/"
+
 async function getUsers() {
     const res = await fetch(`${BASE_URL}api/user`)
     const users = await res.json()

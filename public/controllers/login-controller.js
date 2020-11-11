@@ -1,14 +1,34 @@
 'use strict';
 import { loginService } from "../services/login-service.js";
 
-const userSession = true
-window.addEventListener('load', () => {
-    userSession ? renderLogin() : renderDashboard()
+let gUsers;
+window.addEventListener('load', async () => {
+    gUsers = await loginService.getUsers()
+    sessionStorage.user ? renderDashboard() : renderLogin()
 })
 
+async function onLogin() {
+    const elUsername = document.querySelector('.login-form .username-inp')
+    const elPassword = document.querySelector('.login-form .password-inp')
+    let user
+    const userDetail = {
+        username: elUsername.value,
+        password: elPassword.value,
+    }
+    try {
+        user = await loginService.handleLogin(userDetail)
+        console.log('session:', sessionStorage.user)
+        if (!user) return
+        clearLogin()
+        renderDashboard()
+        sessionStorage.setItem('user', JSON.stringify(user))
+    } catch (error) {
+        console.log('ERR:', error)
+    }
+}
 
 function renderLogin() {
-    console.log('login',)
+    clearDashboard()
     document.querySelector('.login').innerHTML = `
     <form class="login-form">
         <label for="">Login</label>
@@ -26,42 +46,22 @@ function renderLogin() {
     });
 }
 function renderDashboard() {
-
+    document.querySelector('.signout-anch').addEventListener('click', onSignOut)
+    let strHTML = ''
+    gUsers.forEach(user => {
+        strHTML += `<h2>${user.username}</h2>`
+    })
+    document.querySelector('.dashboard-list').innerHTML = strHTML
 }
 
-async function onLogin() {
-    const elUsername = document.querySelector('.login-form .username-inp')
-    const elPassword = document.querySelector('.login-form .password-inp')
-    let user
-    let users
-
-    const userDetail = {
-        username: elUsername.value,
-        password: elPassword.value,
-    }
-    try {
-        user = await loginService.handleLogin(userDetail)
-        users = await loginService.getUsers()
-        console.log('user?', user)
-        let strHTML = '';
-        if (!user) return
-        users.forEach(user => {
-            strHTML += `<p>${user.username}</p>`
-        });
-        document.querySelector('.login').innerHTML = ''
-        document.querySelector('.dashboard-list').innerHTML = strHTML
-        sessionStorage.setItem('user', JSON.stringify(user))
-    } catch (error) {
-        console.log('ERR:', error)
-    }
-
-
+function clearLogin() {
+    document.querySelector('.login').innerHTML = ''
 }
-// async function logout() {
-//     await httpService.post('auth/logout');
-//     sessionStorage.clear();
-// }
-// function _handleLogin(user) {
-//     sessionStorage.setItem('user', JSON.stringify(user))
-//     return user;
-// }
+function clearDashboard() {
+    document.querySelector('.dashboard-list').innerHTML = ''
+}
+
+function onSignOut() {
+    sessionStorage.clear()
+    window.location.replace('/');
+}
