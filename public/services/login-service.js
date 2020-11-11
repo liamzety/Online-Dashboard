@@ -4,7 +4,7 @@ export const loginService = {
     handleLogOut,
     getUsers
 }
-const BASE_URL = "http://localhost:3030/"
+const BASE_URL = "/"
 
 
 async function getUsers() {
