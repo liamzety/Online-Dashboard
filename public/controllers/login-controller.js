@@ -4,7 +4,6 @@ let gUsers;
 let gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : '';
 
 window.addEventListener('load', async () => {
-    const socket = io('/');
 
     gUsers = await loginService.getUsers()
     sessionStorage.user ? renderDashboard() : renderLogin()
