@@ -27,9 +27,17 @@
         </div>
     </section>
 
+    <div id="server-time">
 
+    </div>
     <script>
         var socket = io();
+        var el;
+
+        socket.on('time', function (timeString) {
+            el = document.getElementById('server-time')
+            el.innerHTML = 'Server time: ' + timeString;
+        });
     </script>
     <script type="module" src="./controllers/login-controller.js"></script>
 

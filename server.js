@@ -39,6 +39,7 @@ app.use('/api/auth', authRoutes)
 io.on('connection', (socket) => {
     // console.log('socket', socket)
     console.log('a user connected');
+    setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 });
 
 app.get('/**', (req, res) => {
