@@ -8,6 +8,8 @@ const path = require('path')
 const app = express()
 const port = process.env.PORT || 3030;
 const http = require('http').createServer(app);
+var io = require('socket.io')(http);
+
 
 // Express App Config
 app.use(bodyParser.json())
@@ -33,6 +35,11 @@ const authRoutes = require('./api/auth/auth.routes')
 
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+
+io.on('connection', (socket) => {
+    // console.log('socket', socket)
+    console.log('a user connected');
+});
 
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

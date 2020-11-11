@@ -10,18 +10,18 @@ async function query(userId) {
 }
 
 
-async function update(user) {
-    const collection = await db.getCollection('user')
-    try {
-        let savedUser = await query(user._id);
-        savedUser = { ...savedUser, ...user };
-        await collection.updateOne({ "_id": ObjectId(user._id) }, { $set: { ...savedUser, _id: ObjectId(user._id) } })
-        return user
-    } catch (err) {
-        console.log('Error, cannot update user', err)
-        throw err
-    }
-}
+// async function update(user) {
+//     const collection = await db.getCollection('user')
+//     try {
+//         let savedUser = await query(user._id);
+//         savedUser = { ...savedUser, ...user };
+//         await collection.updateOne({ "_id": ObjectId(user._id) }, { $set: { ...savedUser, _id: ObjectId(user._id) } })
+//         return user
+//     } catch (err) {
+//         console.log('Error, cannot update user', err)
+//         throw err
+//     }
+// }
 
 async function getByUsername(username) {
     try {
@@ -35,7 +35,7 @@ async function getByUsername(username) {
 }
 module.exports = {
     query,
-    update,
+    // update,
     getByUsername
 }
 
