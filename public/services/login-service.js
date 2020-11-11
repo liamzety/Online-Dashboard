@@ -5,7 +5,6 @@ export const loginService = {
     getUsers
 }
 const BASE_URL = "/"
-const socket = io();
 
 
 async function getUsers() {
