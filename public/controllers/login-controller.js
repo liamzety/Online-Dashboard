@@ -3,7 +3,7 @@ import { loginService } from "../services/login-service.js";
 let gUsers;
 let gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : '';
 
-const socket = io('//localhost:3030', { transports: ['websocket'] });
+const socket = io('/', { transports: ['websocket'] });
 socket.on('time', (params) => {
     console.log('time',)
 })
