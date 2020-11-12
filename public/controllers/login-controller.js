@@ -2,8 +2,8 @@ import { loginService } from "../services/login-service.js";
 
 let gUsers;
 let gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : null;
-
-let socket = io('//localhost:3030', { transports: ['websocket'] });
+// //localhost:3030
+let socket = io('/', { transports: ['websocket'] });
 
 window.addEventListener('load', async () => {
     gUsers = await loginService.getUsers()
