@@ -1,12 +1,17 @@
-'use strict';
 import { loginService } from "../services/login-service.js";
+
 let gUsers;
 let gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : '';
 
+const socket = io('//localhost:3030', { transports: ['websocket'] });
+socket.on('time', (params) => {
+    console.log('time',)
+})
+
 window.addEventListener('load', async () => {
-    const socket = io('/', { transports: ['websocket'] });
     gUsers = await loginService.getUsers()
     sessionStorage.user ? renderDashboard() : renderLogin()
+
 })
 
 async function onLogin() {
