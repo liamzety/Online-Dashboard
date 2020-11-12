@@ -1,9 +1,15 @@
+//MIXINS
+@import './basics/mixins';
 // BASICS
 @import './basics/variables';
+@import './basics/animations';
 @import './basics/helpers';
 @import './basics/typography';
 @import './basics/base';
-//SECTIONS  
+// SECTIONS  
 @import './sections/nav';
 @import './sections/login';
 @import './sections/user-list';
+// MODALS
+@import './modals/user-detail-modal';
+@import './modals/screen-wrapper';

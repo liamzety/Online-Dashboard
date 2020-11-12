@@ -11,16 +11,13 @@
 
 body {
   margin: 0;
+  background-image: linear-gradient(100deg, #f26798 0%, #3023ae 100%);
 }
 
 button,
 a {
   cursor: pointer;
-  transition: .3s;
-
-  &:hover {
-    filter: brightness(.85);
-  }
+  transition: .2s;
 }
 
 input {
@@ -50,6 +47,16 @@ select {
 
   &:hover {
     filter: brightness(.97);
+  }
+}
+
+.fas,
+.fa {
+  transition: .3s;
+  cursor: pointer;
+
+  &:hover {
+    color: $mainPurple;
   }
 }
 

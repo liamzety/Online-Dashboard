@@ -29,7 +29,6 @@ async function updateUser(user) {
 async function getByUsername(username) {
     try {
         const user = db.find(user => user.username === username)
-        console.log('user?', username)
         return user;
     } catch (err) {
         console.log('Error, cannot find user', err)

@@ -6,9 +6,9 @@ function connectSockets(io) {
         const userAgent = socket.handshake.headers['user-agent'];
 
         socket.on('logout', () => {
-            io.to('room').emit('update', { userAgent, address })
             socket.leave('room');
             socket.disconnect(0);
+            io.to('room').emit('update', { userAgent, address })
 
         })
         socket.on('renderDashboard', () => {

@@ -1,24 +1,25 @@
 .main-nav {
-    background-color: $mainBlue;
-    min-height: 75px;
-    max-height: 5vh;
+    background-color: $mainWhite;
+    height: 10vh;
+    color: $mainBlack;
+    border-bottom: 2px solid #b2ababfc;
+    box-shadow: 0 0 12px -3px #000000c9;
 
     .nav-action {
+        align-items: center;
+
         h2 {
             font-size: 15px;
             margin-bottom: 10px;
         }
 
-
-
         button {
-            align-self: flex-end;
-            width: 60%;
-            color: $mainWhite;
-            padding: 2px 0;
-            border-radius: 30px;
-            background-color: transparent;
-            border: 1px solid $mainWhite;
+            @include btn(80px, $mainGrey, $mainGrey);
+
+            &:hover {
+                border-color: #222;
+                color: #222;
+            }
         }
     }
 }

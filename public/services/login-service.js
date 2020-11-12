@@ -5,14 +5,11 @@ export const loginService = {
     getUsers,
     updateUser
 }
-//   http://localhost:3030/
 const BASE_URL = "/"
-
 
 async function getUsers() {
     const res = await fetch(`${BASE_URL}api/user`)
-    const users = await res.json()
-    return users
+    return await res.json()
 }
 async function handleLogin(user) {
     try {
@@ -46,7 +43,6 @@ async function updateUser(user) {
             body: JSON.stringify(user)
         })
         if (res.status !== 200) throw new Error()
-
         return await res.json()
     } catch (error) {
         console.log('ERR', error)

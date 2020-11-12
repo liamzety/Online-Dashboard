@@ -2,11 +2,11 @@ import { loginService } from "../services/login-service.js";
 
 let gUsers;
 let gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : null;
-// //localhost:3030
 let socket = io('/', { transports: ['websocket'] });
 
 window.addEventListener('load', async () => {
     gUsers = await loginService.getUsers()
+
     socket.on('update', async ({ userAgent, address }) => {
         gCurrUser = sessionStorage.user ? JSON.parse(sessionStorage.user) : null;
         const user = {
@@ -19,9 +19,9 @@ window.addEventListener('load', async () => {
         gUsers = await loginService.getUsers()
         renderDashboard()
     })
-    if (sessionStorage.user) {
-        socket.emit('renderDashboard')
-    } else renderLogin()
+
+    if (sessionStorage.user) socket.emit('renderDashboard')
+    else renderLogin()
 
 })
 
@@ -53,11 +53,11 @@ function renderLogin() {
     <form class="login-form flex justify-center align-center col main-container">
         <div class="field-container flex align-center w100">
             <label for="username">Username</label>
-            <input class="username-inp w100" type="text" id="username" name="username" required>
+            <input value="admin" class="username-inp w100" type="text" id="username" name="username" required>
         </div>
         <div class="field-container flex align-center w100">
             <label for="password">Password</label>
-            <input class="password-inp w100" type="password" id="password" name="password" required>
+            <input value="1" class="password-inp w100" type="password" id="password" name="password" required>
         </div>
         <button>Login</button>
     </form>
@@ -78,19 +78,24 @@ function renderDashboard() {
     <button class="signout-btn">Sign out</button>
     `;
     document.querySelector('.signout-btn').addEventListener('click', onLogOut)
-    let strHTML = ``
+    let strHTML = `<div class="user-list-grid main-container">`
     gUsers.forEach(user => {
         strHTML += `
         <div class="user-preview"> 
+        <header class="flex align-center">
+        ${user.isOnline ? '<div class="circle online"></div>' : '<div class="circle offline"></div>'}
         <h3>${user.username}</h3>
-        <h1>${user.isOnline ? 'online' : 'offline'}</h1>
-        <p>Last logged at: ${_timeConverter(user.lastLoginAt)}</p>
-        <p>IP: ${user.ip}</p>
+        </header>
+        <div class="user-preview-container flex space-between col">
+        <p> <span class="bold">Last logged at:</span> ${_timeConverter(user.lastLoginAt)}</p>
+        <p> <span class="bold">IP - </span> ${user.ip}</p>
         <button class="more-details-btn">More Details</button>
+        </div>
         </div>
         `
 
     })
+    strHTML += '</div>'
     document.querySelector('.user-list').innerHTML = strHTML
     for (let i = 0; i < document.querySelectorAll('.more-details-btn').length; i++) {
         document.querySelectorAll('.more-details-btn')[i].addEventListener('click', () => {
@@ -102,10 +107,26 @@ function renderDashboard() {
 function onMoreDetails(userId) {
     const user = gUsers.find(user => user.id === userId)
     document.querySelector('.user-detail-modal').innerHTML = `
-    <p>User agent: ${user.userAgent}</p>
-    <p>Logins count: ${user.loginCount}</p>
-    <button>Close</button>
+    <div class="modal-header flex justify-center align-center w100">
+    <i class="close-btn fas fa-times absolute"></i>
+    <h1>${user.username} Details</h1>
+    </div>
+    <div class="user-modal-container flex space-between col w100">
+    <p> <span class="bold">User agent:</span> ${user.userAgent}</p>
+    <p> <span class="bold">Logins count:</span> ${user.loginCount}</p>
+    </div>
     `
+    toggleModal()
+}
+function toggleModal() {
+    const elScreenWrapper = document.querySelector('.screen-wrapper')
+    const elCloseBtn = document.querySelector('.modal-header .close-btn')
+
+    elScreenWrapper.classList.toggle("show")
+    document.querySelector('.user-detail-modal').classList.toggle("show")
+
+    elScreenWrapper.onclick = toggleModal
+    elCloseBtn.onclick = toggleModal
 }
 function showHideLogin(toShow) {
     const elLogin = document.querySelector('.login')
@@ -128,15 +149,15 @@ function showHideDashboard(toShow) {
     elUserList.classList.add('hide')
 }
 
-function onLogOut() {
-    socket.emit('logout')
+async function onLogOut() {
+    await socket.emit('logout')
     const user = {
         ...gCurrUser,
         isOnline: false,
     }
     loginService.updateUser(user)
-    loginService.handleLogOut()
     renderLogin()
+    loginService.handleLogOut()
 }
 
 function _timeConverter(UNIX_timestamp) {
@@ -146,7 +167,6 @@ function _timeConverter(UNIX_timestamp) {
     const date = currDate.getDate();
     const hour = currDate.getHours();
     const min = currDate.getMinutes();
-    const sec = currDate.getSeconds();
-    const time = date + '/' + month + '/' + year + ' ' + hour + ':' + min + ':' + sec;
+    const time = date + '/' + month + '/' + year + ' ' + hour + ':' + min;
     return time;
 }

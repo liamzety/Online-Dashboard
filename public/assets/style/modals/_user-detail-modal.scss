@@ -1,0 +1,39 @@
+.user-detail-modal {
+    visibility: hidden;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    background-color: $mainWhite;
+    box-shadow: $mainShadow;
+    border-radius: 5px;
+    min-width: 400px;
+    max-width: 35vw;
+
+    .modal-header {
+        border-bottom: 1px solid grey;
+        margin-bottom: 25px;
+        padding: 10px;
+
+        h1 {
+            font-size: 24px;
+        }
+
+        .close-btn {
+            left: 25px;
+            transition: none;
+        }
+
+    }
+
+    .user-modal-container {
+        padding: 25px;
+
+        p:first-child {
+            margin-bottom: 25px;
+        }
+
+    }
+
+}

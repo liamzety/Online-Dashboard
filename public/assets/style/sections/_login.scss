@@ -1,12 +1,13 @@
 .login {
-    min-height: 80vh;
+    min-height: 90vh;
 }
 
 .login-form {
     width: 400px;
     padding: 40px 25px;
     border-radius: 3px;
-    box-shadow: 0px 0px 9px 0px #bab8b8;
+    box-shadow: $mainShadow;
+    background-color: $mainWhite;
 
     .field-container {
         margin-bottom: 25px;
@@ -21,12 +22,21 @@
 
     button {
         border: 0;
-        border-radius: 3px;
-        background-color: rgb(48, 230, 48);
-        padding: 15px;
+        border-radius: 30px;
+        width: 100px;
+        border: 2px solid $mainGreen;
+        background-color: transparent;
+        color: $mainGreen;
+        padding: 5px;
         font-size: 17px;
         font-weight: 700;
         align-self: flex-end;
+
+        &:hover {
+            border-color: $mainRed;
+            background-color: $mainRed;
+            color: #ffff;
+        }
     }
 
 

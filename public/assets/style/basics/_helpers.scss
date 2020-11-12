@@ -1,9 +1,14 @@
-.main-container {
-  max-width: 90vw;
+.show {
+  visibility: visible !important;
+  animation: fade-in .3s cubic-bezier(.39, .575, .565, 1.000) both
 }
 
 .hide {
   display: none;
+}
+
+.bold {
+  font-weight: 700;
 }
 
 .flex {
@@ -99,10 +104,7 @@
 }
 
 .main-container {
-  max-width: 1280px;
   margin: 0 auto;
+  max-width: 90vw;
 
-  @media (max-width:1280px) {
-    padding: 0 35px;
-  }
 }
