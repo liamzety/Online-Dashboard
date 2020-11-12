@@ -21,7 +21,6 @@ async function login(username, password) {
         return _user
     })
     _saveToDB(users)
-    delete user.password;
     return user;
 }
 

@@ -257,4 +257,17 @@ a {
   -ms-flex-item-align: end;
       align-self: flex-end;
 }
+
+.user-list {
+  min-height: 80vh;
+}
+
+.user-list .user-preview {
+  width: 400px;
+  padding: 40px 25px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 0px 9px 0px #bab8b8;
+          box-shadow: 0px 0px 9px 0px #bab8b8;
+  margin-bottom: 40px;
+}
 /*# sourceMappingURL=main.css.map */

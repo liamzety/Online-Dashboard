@@ -1,4 +1,5 @@
 const db = require('../../data/user_db.json');
+const fs = require('fs')
 
 async function query(userId) {
     try {
@@ -10,18 +11,20 @@ async function query(userId) {
 }
 
 
-// async function update(user) {
-//     const collection = await db.getCollection('user')
-//     try {
-//         let savedUser = await query(user._id);
-//         savedUser = { ...savedUser, ...user };
-//         await collection.updateOne({ "_id": ObjectId(user._id) }, { $set: { ...savedUser, _id: ObjectId(user._id) } })
-//         return user
-//     } catch (err) {
-//         console.log('Error, cannot update user', err)
-//         throw err
-//     }
-// }
+async function updateUser(user) {
+    if (!user.id) return
+    try {
+        const userIdx = db.findIndex(_user => {
+            return _user.id === user.id
+        })
+        const users = db
+        users[userIdx] = { ...users[userIdx], ...user }
+        _saveToDB(users)
+    } catch (err) {
+        console.log('Error, cannot update user', err)
+        throw err
+    }
+}
 
 async function getByUsername(username) {
     try {
@@ -35,7 +38,19 @@ async function getByUsername(username) {
 }
 module.exports = {
     query,
-    // update,
+    updateUser,
     getByUsername
+}
+
+function _saveToDB(users) {
+    return new Promise((resolve, reject) => {
+        fs.writeFile("data/user_db.json", JSON.stringify(users), (err) => {
+            if (err) {
+                console.log('err?', err)
+                return reject(err)
+            }
+            resolve()
+        });
+    })
 }
 

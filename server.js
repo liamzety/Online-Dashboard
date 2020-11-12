@@ -10,25 +10,6 @@ const port = process.env.PORT || 3030;
 const http = require('http').createServer(app);
 const socketIO = require('socket.io');
 const io = socketIO(http, { transports: ['websocket'] });
-// const WebSocket = require('isomorphic-ws');
-
-// const ws = new WebSocket('wss://echo.websocket.org/');
-// ws.onopen = function open() {
-//     console.log('connected');
-//     ws.send(Date.now());
-// };
-
-// ws.onclose = function close() {
-//     console.log('disconnected');
-// };
-
-// ws.onmessage = function incoming(data) {
-//     console.log(`Roundtrip time: ${Date.now() - data.data} ms`);
-
-//     // setTimeout(function timeout() {
-//     //     ws.send(Date.now());
-//     // }, 1000);
-// };
 
 
 // Express App Config
@@ -59,9 +40,21 @@ app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
 
 io.on('connection', (socket) => {
-    // console.log('socket', socket)
-    console.log('a user connected');
-    // setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+    const address = socket.handshake.address;
+    const userAgent = socket.handshake.headers['user-agent'];
+
+    socket.on('logout', (test) => {
+        console.log('logout',)
+        io.to('room').emit('update', { userAgent, address })
+        socket.leave('room');
+        socket.disconnect(0);
+
+    })
+    socket.on('renderDashboard', (test) => {
+        socket.join('room');
+        io.to('room').emit('update', { userAgent, address })
+    })
+
 });
 
 app.get('/**', (req, res) => {

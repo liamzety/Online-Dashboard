@@ -2,9 +2,10 @@
 export const loginService = {
     handleLogin,
     handleLogOut,
-    getUsers
+    getUsers,
+    updateUser
 }
-const BASE_URL = "/"
+const BASE_URL = "http://localhost:3030/"
 
 
 async function getUsers() {
@@ -31,9 +32,24 @@ async function handleLogin(user) {
 
 }
 async function handleLogOut() {
-    // clearInterval(userTimeInterval)
-    // console.log('TIME:', userTime)
-    // userTime = 0
     sessionStorage.clear()
     window.location.replace('/');
+}
+async function updateUser(user) {
+    try {
+        const res = await fetch(`${BASE_URL}api/user/${user.id}`, {
+            method: 'PUT',
+            headers: {
+                'Accept': 'application/json , text/plain, */*',
+                'Content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+        if (res.status !== 200) throw new Error()
+
+        return await res.json()
+    } catch (error) {
+        console.log('ERR', error)
+    }
+
 }
