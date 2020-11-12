@@ -25,7 +25,6 @@ async function handleLogin(user) {
             body: JSON.stringify(user)
         })
         if (res.status !== 200) throw new Error()
-
         return await res.json()
     } catch (error) {
         console.log('Login unsuccessful')

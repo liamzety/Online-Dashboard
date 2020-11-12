@@ -20,21 +20,9 @@ async function logout(req, res) {
     }
 }
 
-// async function signup(req, res) {
-//     try {
-//         const { username, password } = req.body
-//         const user = await authService.signup(username, password)
-//         req.session.user = user
-//         res.json(user)
-//     } catch (err) {
-//         res.status(500).send({ error: 'could not signup, please try later' })
-//     }
-// }
-
 
 
 module.exports = {
     login,
-    // signup,
     logout
 }

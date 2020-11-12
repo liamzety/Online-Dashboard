@@ -35,27 +35,12 @@ if (process.env.NODE_ENV === 'production') {
 }
 const userRoutes = require('./api/user/user.routes')
 const authRoutes = require('./api/auth/auth.routes')
+const connectSockets = require('./api/socket/socket.routes')
 
 app.use('/api/user', userRoutes)
 app.use('/api/auth', authRoutes)
+connectSockets(io)
 
-io.on('connection', (socket) => {
-    const address = socket.handshake.address;
-    const userAgent = socket.handshake.headers['user-agent'];
-
-    socket.on('logout', (test) => {
-        console.log('logout',)
-        io.to('room').emit('update', { userAgent, address })
-        socket.leave('room');
-        socket.disconnect(0);
-
-    })
-    socket.on('renderDashboard', (test) => {
-        socket.join('room');
-        io.to('room').emit('update', { userAgent, address })
-    })
-
-});
 
 app.get('/**', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));

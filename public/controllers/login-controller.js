@@ -38,7 +38,6 @@ async function onLogin() {
         if (!user) return
         sessionStorage.setItem('user', JSON.stringify(user))
         gCurrUser = JSON.parse(sessionStorage.user)
-        console.log('session:', gCurrUser)
         socket.emit('renderDashboard')
     } catch (error) {
         console.log('ERR:', error)
@@ -71,7 +70,6 @@ function renderLogin() {
 }
 
 function renderDashboard() {
-    console.log('im here?',)
     showHideLogin(false)
     showHideDashboard(true)
     document.querySelector('.curr-page').innerText = 'Dashboard'
@@ -86,34 +84,48 @@ function renderDashboard() {
         <div class="user-preview"> 
         <h3>${user.username}</h3>
         <h1>${user.isOnline ? 'online' : 'offline'}</h1>
-        <p>Last seen: ${_timeConverter(user.lastLoginAt)}</p>
-        <p>User agent: ${user.userAgent}</p>
+        <p>Last logged at: ${_timeConverter(user.lastLoginAt)}</p>
         <p>IP: ${user.ip}</p>
+        <button class="more-details-btn">More Details</button>
         </div>
         `
-    })
 
+    })
     document.querySelector('.user-list').innerHTML = strHTML
+    for (let i = 0; i < document.querySelectorAll('.more-details-btn').length; i++) {
+        document.querySelectorAll('.more-details-btn')[i].addEventListener('click', () => {
+            onMoreDetails(gUsers[i].id)
+        })
+    }
 }
 
-
+function onMoreDetails(userId) {
+    const user = gUsers.find(user => user.id === userId)
+    document.querySelector('.user-detail-modal').innerHTML = `
+    <p>User agent: ${user.userAgent}</p>
+    <p>Logins count: ${user.loginCount}</p>
+    <button>Close</button>
+    `
+}
 function showHideLogin(toShow) {
+    const elLogin = document.querySelector('.login')
     if (toShow) {
-        document.querySelector('.login').classList.remove('hide')
-        document.querySelector('.login').classList.add('flex')
+        elLogin.classList.remove('hide')
+        elLogin.classList.add('flex')
         return
     }
-    document.querySelector('.login').classList.remove('flex')
-    document.querySelector('.login').classList.add('hide')
+    elLogin.classList.remove('flex')
+    elLogin.classList.add('hide')
 }
 function showHideDashboard(toShow) {
+    const elUserList = document.querySelector('.user-list')
     if (toShow) {
-        document.querySelector('.user-list').classList.add('flex')
-        document.querySelector('.user-list').classList.remove('hide')
+        elUserList.classList.add('flex')
+        elUserList.classList.remove('hide')
         return
     }
-    document.querySelector('.user-list').classList.remove('flex')
-    document.querySelector('.user-list').classList.add('hide')
+    elUserList.classList.remove('flex')
+    elUserList.classList.add('hide')
 }
 
 function onLogOut() {

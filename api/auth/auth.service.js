@@ -17,6 +17,7 @@ async function login(username, password) {
     const users = db.map(_user => {
         if (_user.username === username) {
             _user.lastLoginAt = Date.now()
+            _user.loginCount++
         }
         return _user
     })
@@ -24,25 +25,10 @@ async function login(username, password) {
     return user;
 }
 
-// async function signup(username, password) {
-//     if (!username || !password) return Promise.reject('username and password are required!')
-//     const hash = await bcrypt.hash(password, saltRounds)
-//     const user = {
-//         username,
-//         password: hash
-//     }
-//     const users = [
-//         ...db,
-//         user
-//     ]
-//     console.log('user:', user)
-//     return user
-// }
 function _saveToDB(users) {
     return new Promise((resolve, reject) => {
         fs.writeFile("data/user_db.json", JSON.stringify(users), (err) => {
             if (err) {
-                console.log('err?', err)
                 return reject(err)
             }
             resolve()
