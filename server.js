@@ -8,8 +8,8 @@ const path = require('path')
 const app = express()
 const port = process.env.PORT || 3030;
 const http = require('http').createServer(app);
-var io = require('socket.io')(http);
-
+const socketIO = require('socket.io');
+const io = socketIO(http, { transports: ['websocket'] });
 
 // Express App Config
 app.use(bodyParser.json())
@@ -39,7 +39,7 @@ app.use('/api/auth', authRoutes)
 io.on('connection', (socket) => {
     // console.log('socket', socket)
     console.log('a user connected');
-    setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
+    // setInterval(() => io.emit('time', new Date().toTimeString()), 1000);
 });
 
 app.get('/**', (req, res) => {
